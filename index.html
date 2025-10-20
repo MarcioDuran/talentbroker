@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech Talent Broker | Recrutamento Especializado em TI</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --google-blue: #4285F4;
+            --google-red: #EA4335;
+            --google-yellow: #FBBC05;
+            --google-green: #34A853;
+            --dark-gray: #202124;
+            --light-gray: #f8f9fa;
+            --white: #ffffff;
+        }
+
+        body {
+            background-color: var(--light-gray);
+            color: var(--dark-gray);
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--google-blue), var(--google-red), var(--google-yellow), var(--google-green));
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--white);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .logo span {
+            background: linear-gradient(45deg, var(--google-blue), var(--google-red), var(--google-yellow), var(--google-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero {
+            padding: 4rem 0;
+            text-align: center;
+            background: linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9)), 
+                        url('https://placehold.co/1200x600/f8f9fa/202124?text=Tech+Talent+Broker') center/cover no-repeat;
+        }
+
+        .hero h2 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--dark-gray);
+            font-weight: 800;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            color: #5f6368;
+        }
+
+        .companies {
+            padding: 3rem 0;
+            background-color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+            color: var(--dark-gray);
+            font-weight: 700;
+        }
+
+        .carousel-container {
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .carousel-track {
+            display: flex;
+            width: calc(250px * 16);
+            animation: scroll 30s linear infinite;
+            animation-play-state: running;
+        }
+
+        .carousel-track:hover {
+            animation-play-state: paused;
+        }
+
+        .carousel-item {
+            min-width: 250px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            filter: grayscale(100%) opacity(0.7);
+            transition: all 0.3s ease;
+            padding: 0 20px;
+        }
+
+        .carousel-item:hover {
+            filter: grayscale(0%) opacity(1);
+            transform: scale(1.1);
+        }
+
+        .carousel-item img {
+            height: 100%;
+            object-fit: contain;
+            max-width: 100%;
+        }
+
+        /* Duplicamos os itens para criar o efeito contínuo */
+        @keyframes scroll {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(calc(-250px * 8));
+            }
+        }
+
+        .services {
+            padding: 4rem 0;
+            background-color: var(--light-gray);
+        }
+
+        .service-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: center;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+        }
+
+        .card i {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--google-blue);
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--dark-gray);
+        }
+
+        .contact {
+            padding: 4rem 0;
+            background: linear-gradient(135deg, var(--google-blue), var(--google-red), var(--google-yellow), var(--google-green));
+            color: var(--white);
+        }
+
+        .contact .section-title {
+            color: var(--white);
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.1);
+            padding: 2rem;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+
+        .file-upload {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            background: var(--white);
+            color: var(--dark-gray);
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .file-upload input[type="file"] {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .submit-btn {
+            background: var(--white);
+            color: var(--google-blue);
+            border: none;
+            padding: 0.75rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .submit-btn:hover {
+            background: var(--light-gray);
+            transform: scale(1.05);
+        }
+
+        .whatsapp-btn {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: #25D366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            text-decoration: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            z-index: 1000;
+            transition: transform 0.3s ease;
+        }
+
+        .whatsapp-btn:hover {
+            transform: scale(1.1);
+        }
+
+        footer {
+            background: var(--dark-gray);
+            color: var(--white);
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        /* Modal de sucesso */
+        .success-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .success-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, var(--google-blue), var(--google-red), var(--google-yellow), var(--google-green));
+            padding: 3rem;
+            border-radius: 20px;
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            color: white;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            transform: scale(0.8);
+            transition: transform 0.3s ease;
+        }
+
+        .success-modal.active .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-content i {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .modal-content h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .modal-content p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .modal-btn {
+            background: white;
+            color: var(--google-blue);
+            border: none;
+            padding: 0.75rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .modal-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        @media (max-width: 768px) {
+            .hero h2 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .carousel-item {
+                min-width: 200px;
+                height: 60px;
+                padding: 0 10px;
+            }
+            
+            @keyframes scroll {
+                0% {
+                    transform: translateX(0);
+                }
+                100% {
+                    transform: translateX(calc(-200px * 8));
+                }
+            }
+            
+            .modal-content {
+                padding: 2rem;
+            }
+            
+            .modal-content h3 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <h1>TECH <span>TALENT</span> BROKER</h1>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h2>Recrutamento Especializado em TI</h2>
+            <p>Conectamos os melhores talentos brasileiros e lusófonos com as empresas mais inovadoras do mundo. Trabalhe remotamente ou em modelo híbrido com as gigantes da tecnologia.</p>
+        </div>
+    </section>
+
+    <section class="companies">
+        <div class="container">
+            <h2 class="section-title">Empresas Parceiras</h2>
+            <div class="carousel-container">
+                <div class="carousel-track">
+                    <!-- Primeira sequência de logos -->
+                    <div class="carousel-item">
+                        <img src="https://placehold.co/150x60/4285F4/FFFFFF?text=CISCO" alt="Cisco">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://placehold.co/150x60/EE0000/FFFFFF?text=RED+HAT" alt="Red Hat">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://placehold.co/150x60/0062FF/FFFFFF?text=IBM" alt="IBM">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://placehold.co/150x60/F80000/FFFFFF?text=ORACLE" alt="Oracle">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://placehold.co/150x60/4285F4/FFFFFF?text=GOOGLE" alt="Google">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://placehold.co/150x60/007AFF/FFFFFF?text=WAZUH" alt="Wazuh">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://placehold.co/150x60/0078D7/FFFFFF?text=MICROSOFT" alt="Microsoft">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://placehold.co/150x60/0A66C2/FFFFFF?text=LINKEDIN" alt="LinkedIn">
+                    </div>
+                    <!-- Segunda sequência duplicada para efeito contínuo -->
+                    <div class="carousel-item">
+                        <img src="https://placehold.co/150x60/4285F4/FFFFFF?text=CISCO" alt="Cisco">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://placehold.co/150x60/EE0000/FFFFFF?text=RED+HAT" alt="Red Hat">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://placehold.co/150x60/0062FF/FFFFFF?text=IBM" alt="IBM">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://placehold.co/150x60/F80000/FFFFFF?text=ORACLE" alt="Oracle">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://placehold.co/150x60/4285F4/FFFFFF?text=GOOGLE" alt="Google">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://placehold.co/150x60/007AFF/FFFFFF?text=WAZUH" alt="Wazuh">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://placehold.co/150x60/0078D7/FFFFFF?text=MICROSOFT" alt="Microsoft">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://placehold.co/150x60/0A66C2/FFFFFF?text=LINKEDIN" alt="LinkedIn">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="services">
+        <div class="container">
+            <h2 class="section-title">Nossos Serviços</h2>
+            <div class="service-cards">
+                <div class="card">
+                    <i class="fas fa-laptop-code"></i>
+                    <h3>Recrutamento Especializado</h3>
+                    <p>Buscamos os melhores talentos para posições técnicas específicas nas áreas de TI, garantindo o match perfeito entre profissional e empresa.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-globe-americas"></i>
+                    <h3>Trabalho Remoto Global</h3>
+                    <p>Oportunidades internacionais para profissionais brasileiros e lusófonos, com suporte completo para alocação remota e híbrida.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-handshake"></i>
+                    <h3>Parceria com Gigantes</h3>
+                    <p>Conexão direta com empresas líderes mundiais em tecnologia, proporcionando carreiras de alto impacto e remuneração competitiva.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact">
+        <div class="container">
+            <h2 class="section-title">Candidate-se Agora</h2>
+            <form class="contact-form" id="contactForm">
+                <div class="form-group">
+                    <label for="name">Nome Completo</label>
+                    <input type="text" id="name" name="name" required placeholder="Seu nome completo">
+                </div>
+                <div class="form-group">
+                    <label for="area">Área Pretendida</label>
+                    <select id="area" name="area" required>
+                        <option value="">Selecione uma área</option>
+                        <option value="desenvolvimento">Desenvolvimento de Software</option>
+                        <option value="devops">DevOps & SRE</option>
+                        <option value="seguranca">Segurança da Informação</option>
+                        <option value="dados">Ciência de Dados & Analytics</option>
+                        <option value="cloud">Cloud Computing</option>
+                        <option value="infra">Infraestrutura & Redes</option>
+                        <option value="outro">Outra área</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="resume">Anexar Currículo (PDF ou DOCX)</label>
+                    <div class="file-upload">
+                        <i class="fas fa-file-upload"></i> Escolher arquivo
+                        <input type="file" id="resume" name="resume" accept=".pdf,.doc,.docx" required>
+                    </div>
+                    <small id="fileName" style="display: block; margin-top: 0.5rem; color: rgba(255,255,255,0.8);">Nenhum arquivo selecionado</small>
+                </div>
+                <button type="submit" class="submit-btn">ENVIAR CANDIDATURA</button>
+            </form>
+        </div>
+    </section>
+
+    <a href="https://wa.me/5511942786597" class="whatsapp-btn" target="_blank" rel="noopener noreferrer">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Modal de Sucesso -->
+    <div class="success-modal" id="successModal">
+        <div class="modal-content">
+            <i class="fas fa-check-circle"></i>
+            <h3>Mensagem Enviada com Sucesso!</h3>
+            <p>Aguarde seu Feedback, da TalentBroker Consultoria em Talentos</p>
+            <button class="modal-btn" id="closeModal">FECHAR</button>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Tech Talent Broker. Todos os direitos reservados.</p>
+            <p>Recrutamento especializado para profissionais de TI brasileiros e lusófonos.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Atualiza o nome do arquivo selecionado
+        document.getElementById('resume').addEventListener('change', function(e) {
+            const fileName = e.target.files[0]?.name || 'Nenhum arquivo selecionado';
+            document.getElementById('fileName').textContent = fileName;
+        });
+
+        // Manipulação do formulário
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const area = document.getElementById('area').value;
+            const file = document.getElementById('resume').files[0];
+            
+            if (!file) {
+                alert('Por favor, anexe seu currículo.');
+                return;
+            }
+            
+            // Verifica o tipo de arquivo
+            const allowedTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+            if (!allowedTypes.includes(file.type)) {
+                alert('Por favor, envie apenas arquivos PDF ou DOCX.');
+                return;
+            }
+            
+            // Cria o link mailto com os dados do formulário
+            const subject = encodeURIComponent(`Candidatura - ${area} - ${name}`);
+            const body = encodeURIComponent(`Olá Tech Talent Broker,\n\nMeu nome é ${name} e estou me candidatando para a área de ${area}.\n\nSegue meu currículo em anexo.\n\nAtenciosamente,\n${name}`);
+            const mailtoLink = `mailto:b2business@msn.com?subject=${subject}&body=${body}`;
+            
+            // Abre o cliente de email padrão
+            window.location.href = mailtoLink;
+            
+            // Mostra o modal de sucesso
+            document.getElementById('successModal').classList.add('active');
+            
+            // Reseta o formulário
+            this.reset();
+            document.getElementById('fileName').textContent = 'Nenhum arquivo selecionado';
+        });
+
+        // Fecha o modal
+        document.getElementById('closeModal').addEventListener('click', function() {
+            document.getElementById('successModal').classList.remove('active');
+        });
+
+        // Fecha o modal ao clicar fora dele
+        document.getElementById('successModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>
