@@ -1,0 +1,22 @@
+{
+  "name": "tech-talent-broker",
+  "version": "1.0.0",
+  "description": "Tech Talent Broker - Recrutamento Especializado em TI",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "recrutamento",
+    "talentos",
+    "tecnologia",
+    "TI"
+  ],
+  "author": "Tech Talent Broker",
+  "license": "MIT",
+  "dependencies": {
+    "nodemailer": "^6.9.7"
+  },
+  "devDependencies": {}
+}
+

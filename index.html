@@ -270,6 +270,12 @@
             transform: scale(1.05);
         }
 
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
         .whatsapp-btn {
             position: fixed;
             bottom: 2rem;
@@ -371,40 +377,59 @@
 
         .modal-btn:hover {
             transform: scale(1.05);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
 
-        @media (max-width: 768px) {
-            .hero h2 {
-                font-size: 2rem;
-            }
-            
-            .hero p {
-                font-size: 1rem;
-            }
-            
-            .carousel-item {
-                min-width: 200px;
-                height: 60px;
-                padding: 0 10px;
-            }
-            
-            @keyframes scroll {
-                0% {
-                    transform: translateX(0);
-                }
-                100% {
-                    transform: translateX(calc(-200px * 8));
-                }
-            }
-            
-            .modal-content {
-                padding: 2rem;
-            }
-            
-            .modal-content h3 {
-                font-size: 1.5rem;
-            }
+        /* Modal de erro */
+        .error-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .error-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .error-modal .modal-content {
+            background: linear-gradient(135deg, #EA4335, #FBBC05);
+        }
+
+        .loading-spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-top: 3px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .submit-btn.loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .submit-btn.loading .loading-spinner {
+            display: inline-block;
         }
     </style>
 </head>
@@ -413,7 +438,8 @@
         <div class="container">
             <div class="header-content">
                 <div class="logo">
-                    <h1>TECH <span>TALENT</span> BROKER</h1>
+                    <i class="fas fa-rocket" style="font-size: 2rem; color: white;"></i>
+                    <h1>Tech Talent <span>Broker</span></h1>
                 </div>
             </div>
         </div>
@@ -421,65 +447,39 @@
 
     <section class="hero">
         <div class="container">
-            <h2>Recrutamento Especializado em TI</h2>
-            <p>Conectamos os melhores talentos brasileiros e lusófonos com as empresas mais inovadoras do mundo. Trabalhe remotamente ou em modelo híbrido com as gigantes da tecnologia.</p>
+            <h2>Conectando Talentos de TI com Oportunidades Globais</h2>
+            <p>Somos especialistas em recrutamento de profissionais brasileiros e lusófonos para as maiores empresas de tecnologia do mundo.</p>
         </div>
     </section>
 
     <section class="companies">
         <div class="container">
-            <h2 class="section-title">Empresas Parceiras</h2>
+            <h2 class="section-title">Empresas que Confiamos</h2>
             <div class="carousel-container">
                 <div class="carousel-track">
-                    <!-- Primeira sequência de logos -->
                     <div class="carousel-item">
-                        <img src="https://placehold.co/150x60/4285F4/FFFFFF?text=CISCO" alt="Cisco">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/1200px-Google_2015_logo.svg.png" alt="Google">
                     </div>
                     <div class="carousel-item">
-                        <img src="https://placehold.co/150x60/EE0000/FFFFFF?text=RED+HAT" alt="Red Hat">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/1200px-Amazon_logo.svg.png" alt="Amazon">
                     </div>
                     <div class="carousel-item">
-                        <img src="https://placehold.co/150x60/0062FF/FFFFFF?text=IBM" alt="IBM">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Microsoft_logo.svg/1200px-Microsoft_logo.svg.png" alt="Microsoft">
                     </div>
                     <div class="carousel-item">
-                        <img src="https://placehold.co/150x60/F80000/FFFFFF?text=ORACLE" alt="Oracle">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Facebook_logo_%282019%29.png/1200px-Facebook_logo_%282019%29.png" alt="Meta">
                     </div>
                     <div class="carousel-item">
-                        <img src="https://placehold.co/150x60/4285F4/FFFFFF?text=GOOGLE" alt="Google">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/1200px-Google_2015_logo.svg.png" alt="Google">
                     </div>
                     <div class="carousel-item">
-                        <img src="https://placehold.co/150x60/007AFF/FFFFFF?text=WAZUH" alt="Wazuh">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/1200px-Amazon_logo.svg.png" alt="Amazon">
                     </div>
                     <div class="carousel-item">
-                        <img src="https://placehold.co/150x60/0078D7/FFFFFF?text=MICROSOFT" alt="Microsoft">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Microsoft_logo.svg/1200px-Microsoft_logo.svg.png" alt="Microsoft">
                     </div>
                     <div class="carousel-item">
-                        <img src="https://placehold.co/150x60/0A66C2/FFFFFF?text=LINKEDIN" alt="LinkedIn">
-                    </div>
-                    <!-- Segunda sequência duplicada para efeito contínuo -->
-                    <div class="carousel-item">
-                        <img src="https://placehold.co/150x60/4285F4/FFFFFF?text=CISCO" alt="Cisco">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="https://placehold.co/150x60/EE0000/FFFFFF?text=RED+HAT" alt="Red Hat">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="https://placehold.co/150x60/0062FF/FFFFFF?text=IBM" alt="IBM">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="https://placehold.co/150x60/F80000/FFFFFF?text=ORACLE" alt="Oracle">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="https://placehold.co/150x60/4285F4/FFFFFF?text=GOOGLE" alt="Google">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="https://placehold.co/150x60/007AFF/FFFFFF?text=WAZUH" alt="Wazuh">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="https://placehold.co/150x60/0078D7/FFFFFF?text=MICROSOFT" alt="Microsoft">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="https://placehold.co/150x60/0A66C2/FFFFFF?text=LINKEDIN" alt="LinkedIn">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Facebook_logo_%282019%29.png/1200px-Facebook_logo_%282019%29.png" alt="Meta">
                     </div>
                 </div>
             </div>
@@ -491,14 +491,14 @@
             <h2 class="section-title">Nossos Serviços</h2>
             <div class="service-cards">
                 <div class="card">
-                    <i class="fas fa-laptop-code"></i>
-                    <h3>Recrutamento Especializado</h3>
-                    <p>Buscamos os melhores talentos para posições técnicas específicas nas áreas de TI, garantindo o match perfeito entre profissional e empresa.</p>
+                    <i class="fas fa-search"></i>
+                    <h3>Seleção Especializada</h3>
+                    <p>Identificamos os melhores talentos em tecnologia através de um processo rigoroso de avaliação técnica e comportamental.</p>
                 </div>
                 <div class="card">
-                    <i class="fas fa-globe-americas"></i>
-                    <h3>Trabalho Remoto Global</h3>
-                    <p>Oportunidades internacionais para profissionais brasileiros e lusófonos, com suporte completo para alocação remota e híbrida.</p>
+                    <i class="fas fa-globe"></i>
+                    <h3>Alcance Global</h3>
+                    <p>Conectamos profissionais brasileiros com empresas multinacionais, abrindo portas para carreiras internacionais de sucesso.</p>
                 </div>
                 <div class="card">
                     <i class="fas fa-handshake"></i>
@@ -516,6 +516,10 @@
                 <div class="form-group">
                     <label for="name">Nome Completo</label>
                     <input type="text" id="name" name="name" required placeholder="Seu nome completo">
+                </div>
+                <div class="form-group">
+                    <label for="email">E-mail</label>
+                    <input type="email" id="email" name="email" required placeholder="seu.email@exemplo.com">
                 </div>
                 <div class="form-group">
                     <label for="area">Área Pretendida</label>
@@ -538,7 +542,10 @@
                     </div>
                     <small id="fileName" style="display: block; margin-top: 0.5rem; color: rgba(255,255,255,0.8);">Nenhum arquivo selecionado</small>
                 </div>
-                <button type="submit" class="submit-btn">ENVIAR CANDIDATURA</button>
+                <button type="submit" class="submit-btn" id="submitBtn">
+                    <span class="loading-spinner"></span>
+                    ENVIAR CANDIDATURA
+                </button>
             </form>
         </div>
     </section>
@@ -557,6 +564,16 @@
         </div>
     </div>
 
+    <!-- Modal de Erro -->
+    <div class="error-modal" id="errorModal">
+        <div class="modal-content">
+            <i class="fas fa-exclamation-circle"></i>
+            <h3>Erro ao Enviar</h3>
+            <p id="errorMessage">Ocorreu um erro ao enviar sua candidatura. Por favor, tente novamente.</p>
+            <button class="modal-btn" id="closeErrorModal">FECHAR</button>
+        </div>
+    </div>
+
     <footer>
         <div class="container">
             <p>&copy; 2024 Tech Talent Broker. Todos os direitos reservados.</p>
@@ -572,48 +589,110 @@
         });
 
         // Manipulação do formulário
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
+        document.getElementById('contactForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
             const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
             const area = document.getElementById('area').value;
             const file = document.getElementById('resume').files[0];
+            const submitBtn = document.getElementById('submitBtn');
             
             if (!file) {
-                alert('Por favor, anexe seu currículo.');
+                showErrorModal('Por favor, anexe seu currículo.');
                 return;
             }
             
             // Verifica o tipo de arquivo
             const allowedTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
             if (!allowedTypes.includes(file.type)) {
-                alert('Por favor, envie apenas arquivos PDF ou DOCX.');
+                showErrorModal('Por favor, envie apenas arquivos PDF ou DOCX.');
+                return;
+            }
+
+            // Verifica o tamanho do arquivo (máximo 10MB)
+            const maxSize = 10 * 1024 * 1024;
+            if (file.size > maxSize) {
+                showErrorModal('O arquivo é muito grande. Máximo permitido: 10MB.');
                 return;
             }
             
-            // Cria o link mailto com os dados do formulário
-            const subject = encodeURIComponent(`Candidatura - ${area} - ${name}`);
-            const body = encodeURIComponent(`Olá Tech Talent Broker,\n\nMeu nome é ${name} e estou me candidatando para a área de ${area}.\n\nSegue meu currículo em anexo.\n\nAtenciosamente,\n${name}`);
-            const mailtoLink = `mailto:marcioduran@gmail.com?subject=${subject}&body=${body}`;
+            // Desabilita o botão e mostra o spinner
+            submitBtn.disabled = true;
+            submitBtn.classList.add('loading');
             
-            // Abre o cliente de email padrão
-            window.location.href = mailtoLink;
-            
-            // Mostra o modal de sucesso
-            document.getElementById('successModal').classList.add('active');
-            
-            // Reseta o formulário
-            this.reset();
-            document.getElementById('fileName').textContent = 'Nenhum arquivo selecionado';
+            try {
+                // Converte o arquivo para Base64
+                const fileContent = await fileToBase64(file);
+                
+                // Envia os dados para a função Netlify
+                const response = await fetch('/.netlify/functions/send-email', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        name: name,
+                        email: email,
+                        area: area,
+                        fileName: file.name,
+                        fileContent: fileContent,
+                        fileType: file.type
+                    })
+                });
+
+                if (response.ok) {
+                    document.getElementById('successModal').classList.add('active');
+                    document.getElementById('contactForm').reset();
+                    document.getElementById('fileName').textContent = 'Nenhum arquivo selecionado';
+                } else {
+                    const errorData = await response.json();
+                    showErrorModal(errorData.message || 'Erro ao enviar o formulário. Tente novamente.');
+                }
+            } catch (error) {
+                console.error('Erro:', error);
+                showErrorModal('Erro ao processar o arquivo. Tente novamente.');
+            } finally {
+                // Reabilita o botão
+                submitBtn.disabled = false;
+                submitBtn.classList.remove('loading');
+            }
         });
 
-        // Fecha o modal
+        // Função para converter arquivo para Base64
+        function fileToBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result.split(',')[1]);
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            });
+        }
+
+        // Função para mostrar modal de erro
+        function showErrorModal(message) {
+            document.getElementById('errorMessage').textContent = message;
+            document.getElementById('errorModal').classList.add('active');
+        }
+
+        // Fecha o modal de sucesso
         document.getElementById('closeModal').addEventListener('click', function() {
             document.getElementById('successModal').classList.remove('active');
         });
 
+        // Fecha o modal de erro
+        document.getElementById('closeErrorModal').addEventListener('click', function() {
+            document.getElementById('errorModal').classList.remove('active');
+        });
+
         // Fecha o modal ao clicar fora dele
         document.getElementById('successModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.classList.remove('active');
+            }
+        });
+
+        document.getElementById('errorModal').addEventListener('click', function(e) {
             if (e.target === this) {
                 this.classList.remove('active');
             }
