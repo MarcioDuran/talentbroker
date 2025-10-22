@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tech Talent Broker | Recrutamento Especializado em TI</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -74,7 +75,7 @@
             padding: 4rem 0;
             text-align: center;
             background: linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9)), 
-                        url('https://placehold.co/1200x600/f8f9fa/202124?text=Tech+Talent+Broker') center/cover no-repeat;
+                        url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&h=600&fit=crop') center/cover no-repeat;
         }
 
         .hero h2 {
@@ -115,7 +116,7 @@
         .carousel-track {
             display: flex;
             width: calc(250px * 16);
-            animation: scroll 30s linear infinite;
+            animation: scroll 40s linear infinite;
             animation-play-state: running;
         }
 
@@ -125,13 +126,13 @@
 
         .carousel-item {
             min-width: 250px;
-            height: 80px;
+            height: 100px;
             display: flex;
             align-items: center;
             justify-content: center;
-            filter: grayscale(100%) opacity(0.7);
+            filter: grayscale(100%) opacity(0.6);
             transition: all 0.3s ease;
-            padding: 0 20px;
+            padding: 0 30px;
         }
 
         .carousel-item:hover {
@@ -140,12 +141,11 @@
         }
 
         .carousel-item img {
-            height: 100%;
+            max-height: 60px;
+            max-width: 150px;
             object-fit: contain;
-            max-width: 100%;
         }
 
-        /* Duplicamos os itens para criar o efeito contínuo */
         @keyframes scroll {
             0% {
                 transform: translateX(0);
@@ -263,9 +263,10 @@
             cursor: pointer;
             transition: all 0.3s ease;
             width: 100%;
+            position: relative;
         }
 
-        .submit-btn:hover {
+        .submit-btn:hover:not(:disabled) {
             background: var(--light-gray);
             transform: scale(1.05);
         }
@@ -273,7 +274,29 @@
         .submit-btn:disabled {
             opacity: 0.6;
             cursor: not-allowed;
-            transform: none;
+        }
+
+        .submit-btn .spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 3px solid var(--google-blue);
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        .submit-btn.loading .spinner {
+            display: block;
+        }
+
+        .submit-btn.loading .btn-text {
+            display: none;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
 
         .whatsapp-btn {
@@ -306,8 +329,7 @@
             padding: 2rem 0;
         }
 
-        /* Modal de sucesso */
-        .success-modal {
+        .success-modal, .error-modal {
             position: fixed;
             top: 0;
             left: 0;
@@ -323,7 +345,7 @@
             transition: all 0.3s ease;
         }
 
-        .success-modal.active {
+        .success-modal.active, .error-modal.active {
             opacity: 1;
             visibility: visible;
         }
@@ -341,8 +363,13 @@
             transition: transform 0.3s ease;
         }
 
-        .success-modal.active .modal-content {
+        .success-modal.active .modal-content,
+        .error-modal.active .modal-content {
             transform: scale(1);
+        }
+
+        .error-modal .modal-content {
+            background: linear-gradient(135deg, #EA4335, #FBBC05);
         }
 
         .modal-content i {
@@ -377,59 +404,44 @@
 
         .modal-btn:hover {
             transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
 
-        /* Modal de erro */
-        .error-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 2000;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .error-modal.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .error-modal .modal-content {
-            background: linear-gradient(135deg, #EA4335, #FBBC05);
-        }
-
-        .loading-spinner {
-            display: none;
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(255,255,255,0.3);
-            border-top: 3px solid white;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin-right: 10px;
-            vertical-align: middle;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .submit-btn.loading {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .submit-btn.loading .loading-spinner {
-            display: inline-block;
+        @media (max-width: 768px) {
+            .hero h2 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .carousel-item {
+                min-width: 200px;
+                height: 80px;
+                padding: 0 20px;
+            }
+            
+            .carousel-item img {
+                max-height: 50px;
+            }
+            
+            @keyframes scroll {
+                0% {
+                    transform: translateX(0);
+                }
+                100% {
+                    transform: translateX(calc(-200px * 8));
+                }
+            }
+            
+            .modal-content {
+                padding: 2rem;
+            }
+            
+            .modal-content h3 {
+                font-size: 1.5rem;
+            }
         }
     </style>
 </head>
@@ -438,8 +450,7 @@
         <div class="container">
             <div class="header-content">
                 <div class="logo">
-                    <i class="fas fa-rocket" style="font-size: 2rem; color: white;"></i>
-                    <h1>Tech Talent <span>Broker</span></h1>
+                    <h1>TECH <span>TALENT</span> BROKER</h1>
                 </div>
             </div>
         </div>
@@ -447,39 +458,65 @@
 
     <section class="hero">
         <div class="container">
-            <h2>Conectando Talentos de TI com Oportunidades Globais</h2>
-            <p>Somos especialistas em recrutamento de profissionais brasileiros e lusófonos para as maiores empresas de tecnologia do mundo.</p>
+            <h2>Recrutamento Especializado em TI</h2>
+            <p>Conectamos os melhores talentos brasileiros e lusófonos com as empresas mais inovadoras do mundo. Trabalhe remotamente ou em modelo híbrido com as gigantes da tecnologia.</p>
         </div>
     </section>
 
     <section class="companies">
         <div class="container">
-            <h2 class="section-title">Empresas que Confiamos</h2>
+            <h2 class="section-title">Empresas Parceiras</h2>
             <div class="carousel-container">
                 <div class="carousel-track">
+                    <!-- Primeira sequência -->
                     <div class="carousel-item">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/1200px-Google_2015_logo.svg.png" alt="Google">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Cisco_logo_blue_2016.svg/320px-Cisco_logo_blue_2016.svg.png" alt="Cisco">
                     </div>
                     <div class="carousel-item">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/1200px-Amazon_logo.svg.png" alt="Amazon">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/Red_Hat_logo.svg/320px-Red_Hat_logo.svg.png" alt="Red Hat">
                     </div>
                     <div class="carousel-item">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Microsoft_logo.svg/1200px-Microsoft_logo.svg.png" alt="Microsoft">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/IBM_logo.svg/320px-IBM_logo.svg.png" alt="IBM">
                     </div>
                     <div class="carousel-item">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Facebook_logo_%282019%29.png/1200px-Facebook_logo_%282019%29.png" alt="Meta">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Oracle_logo.svg/320px-Oracle_logo.svg.png" alt="Oracle">
                     </div>
                     <div class="carousel-item">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/1200px-Google_2015_logo.svg.png" alt="Google">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/320px-Google_2015_logo.svg.png" alt="Google">
                     </div>
                     <div class="carousel-item">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/1200px-Amazon_logo.svg.png" alt="Amazon">
+                        <img src="https://documentation.wazuh.com/current/_static/logo.png" alt="Wazuh">
                     </div>
                     <div class="carousel-item">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Microsoft_logo.svg/1200px-Microsoft_logo.svg.png" alt="Microsoft">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Microsoft_logo.svg/320px-Microsoft_logo.svg.png" alt="Microsoft">
                     </div>
                     <div class="carousel-item">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Facebook_logo_%282019%29.png/1200px-Facebook_logo_%282019%29.png" alt="Meta">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/LinkedIn_logo_initials.png/240px-LinkedIn_logo_initials.png" alt="LinkedIn">
+                    </div>
+                    <!-- Segunda sequência duplicada -->
+                    <div class="carousel-item">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Cisco_logo_blue_2016.svg/320px-Cisco_logo_blue_2016.svg.png" alt="Cisco">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/Red_Hat_logo.svg/320px-Red_Hat_logo.svg.png" alt="Red Hat">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/IBM_logo.svg/320px-IBM_logo.svg.png" alt="IBM">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Oracle_logo.svg/320px-Oracle_logo.svg.png" alt="Oracle">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/320px-Google_2015_logo.svg.png" alt="Google">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://documentation.wazuh.com/current/_static/logo.png" alt="Wazuh">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Microsoft_logo.svg/320px-Microsoft_logo.svg.png" alt="Microsoft">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/LinkedIn_logo_initials.png/240px-LinkedIn_logo_initials.png" alt="LinkedIn">
                     </div>
                 </div>
             </div>
@@ -491,14 +528,14 @@
             <h2 class="section-title">Nossos Serviços</h2>
             <div class="service-cards">
                 <div class="card">
-                    <i class="fas fa-search"></i>
-                    <h3>Seleção Especializada</h3>
-                    <p>Identificamos os melhores talentos em tecnologia através de um processo rigoroso de avaliação técnica e comportamental.</p>
+                    <i class="fas fa-laptop-code"></i>
+                    <h3>Recrutamento Especializado</h3>
+                    <p>Buscamos os melhores talentos para posições técnicas específicas nas áreas de TI, garantindo o match perfeito entre profissional e empresa.</p>
                 </div>
                 <div class="card">
-                    <i class="fas fa-globe"></i>
-                    <h3>Alcance Global</h3>
-                    <p>Conectamos profissionais brasileiros com empresas multinacionais, abrindo portas para carreiras internacionais de sucesso.</p>
+                    <i class="fas fa-globe-americas"></i>
+                    <h3>Trabalho Remoto Global</h3>
+                    <p>Oportunidades internacionais para profissionais brasileiros e lusófonos, com suporte completo para alocação remota e híbrida.</p>
                 </div>
                 <div class="card">
                     <i class="fas fa-handshake"></i>
@@ -518,33 +555,37 @@
                     <input type="text" id="name" name="name" required placeholder="Seu nome completo">
                 </div>
                 <div class="form-group">
-                    <label for="email">E-mail</label>
-                    <input type="email" id="email" name="email" required placeholder="seu.email@exemplo.com">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required placeholder="seu@email.com">
+                </div>
+                <div class="form-group">
+                    <label for="phone">Telefone</label>
+                    <input type="tel" id="phone" name="phone" required placeholder="(11) 99999-9999">
                 </div>
                 <div class="form-group">
                     <label for="area">Área Pretendida</label>
                     <select id="area" name="area" required>
                         <option value="">Selecione uma área</option>
-                        <option value="desenvolvimento">Desenvolvimento de Software</option>
-                        <option value="devops">DevOps & SRE</option>
-                        <option value="seguranca">Segurança da Informação</option>
-                        <option value="dados">Ciência de Dados & Analytics</option>
-                        <option value="cloud">Cloud Computing</option>
-                        <option value="infra">Infraestrutura & Redes</option>
-                        <option value="outro">Outra área</option>
+                        <option value="Desenvolvimento de Software">Desenvolvimento de Software</option>
+                        <option value="DevOps & SRE">DevOps & SRE</option>
+                        <option value="Segurança da Informação">Segurança da Informação</option>
+                        <option value="Ciência de Dados & Analytics">Ciência de Dados & Analytics</option>
+                        <option value="Cloud Computing">Cloud Computing</option>
+                        <option value="Infraestrutura & Redes">Infraestrutura & Redes</option>
+                        <option value="Outra área">Outra área</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="resume">Anexar Currículo (PDF ou DOCX)</label>
+                    <label for="resume">Anexar Currículo (PDF ou DOCX - máx 5MB)</label>
                     <div class="file-upload">
                         <i class="fas fa-file-upload"></i> Escolher arquivo
                         <input type="file" id="resume" name="resume" accept=".pdf,.doc,.docx" required>
                     </div>
                     <small id="fileName" style="display: block; margin-top: 0.5rem; color: rgba(255,255,255,0.8);">Nenhum arquivo selecionado</small>
                 </div>
-                <button type="submit" class="submit-btn" id="submitBtn">
-                    <span class="loading-spinner"></span>
-                    ENVIAR CANDIDATURA
+                <button type="submit" class="submit-btn">
+                    <span class="btn-text">ENVIAR CANDIDATURA</span>
+                    <div class="spinner"></div>
                 </button>
             </form>
         </div>
@@ -554,22 +595,20 @@
         <i class="fab fa-whatsapp"></i>
     </a>
 
-    <!-- Modal de Sucesso -->
     <div class="success-modal" id="successModal">
         <div class="modal-content">
             <i class="fas fa-check-circle"></i>
-            <h3>Mensagem Enviada com Sucesso!</h3>
-            <p>Aguarde seu Feedback, da TalentBroker Consultoria em Talentos</p>
-            <button class="modal-btn" id="closeModal">FECHAR</button>
+            <h3>Candidatura Enviada com Sucesso!</h3>
+            <p>Recebemos sua candidatura e currículo. Em breve entraremos em contato!</p>
+            <button class="modal-btn" id="closeSuccessModal">FECHAR</button>
         </div>
     </div>
 
-    <!-- Modal de Erro -->
     <div class="error-modal" id="errorModal">
         <div class="modal-content">
-            <i class="fas fa-exclamation-circle"></i>
+            <i class="fas fa-exclamation-triangle"></i>
             <h3>Erro ao Enviar</h3>
-            <p id="errorMessage">Ocorreu um erro ao enviar sua candidatura. Por favor, tente novamente.</p>
+            <p id="errorMessage">Ocorreu um erro ao enviar sua candidatura. Por favor, tente novamente ou entre em contato pelo WhatsApp.</p>
             <button class="modal-btn" id="closeErrorModal">FECHAR</button>
         </div>
     </div>
@@ -582,110 +621,120 @@
     </footer>
 
     <script>
+        // Inicializa EmailJS com sua Public Key
+        (function(){
+            emailjs.init("ARKLIrfSt3B7kClQi");
+        })();
+
         // Atualiza o nome do arquivo selecionado
         document.getElementById('resume').addEventListener('change', function(e) {
-            const fileName = e.target.files[0]?.name || 'Nenhum arquivo selecionado';
-            document.getElementById('fileName').textContent = fileName;
+            const file = e.target.files[0];
+            if (file) {
+                const fileSize = file.size / 1024 / 1024;
+                if (fileSize > 5) {
+                    alert('O arquivo é muito grande. Por favor, selecione um arquivo menor que 5MB.');
+                    this.value = '';
+                    document.getElementById('fileName').textContent = 'Nenhum arquivo selecionado';
+                    return;
+                }
+                document.getElementById('fileName').textContent = file.name + ' (' + fileSize.toFixed(2) + ' MB)';
+            } else {
+                document.getElementById('fileName').textContent = 'Nenhum arquivo selecionado';
+            }
         });
 
         // Manipulação do formulário
         document.getElementById('contactForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
+            const submitBtn = this.querySelector('.submit-btn');
             const name = document.getElementById('name').value;
             const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
             const area = document.getElementById('area').value;
-            const file = document.getElementById('resume').files[0];
-            const submitBtn = document.getElementById('submitBtn');
+            const fileInput = document.getElementById('resume');
+            const file = fileInput.files[0];
             
             if (!file) {
-                showErrorModal('Por favor, anexe seu currículo.');
+                alert('Por favor, anexe seu currículo.');
                 return;
             }
             
-            // Verifica o tipo de arquivo
             const allowedTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
             if (!allowedTypes.includes(file.type)) {
-                showErrorModal('Por favor, envie apenas arquivos PDF ou DOCX.');
-                return;
-            }
-
-            // Verifica o tamanho do arquivo (máximo 10MB)
-            const maxSize = 10 * 1024 * 1024;
-            if (file.size > maxSize) {
-                showErrorModal('O arquivo é muito grande. Máximo permitido: 10MB.');
+                alert('Por favor, envie apenas arquivos PDF ou DOCX.');
                 return;
             }
             
-            // Desabilita o botão e mostra o spinner
             submitBtn.disabled = true;
             submitBtn.classList.add('loading');
             
             try {
-                // Converte o arquivo para Base64
-                const fileContent = await fileToBase64(file);
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
                 
-                // Envia os dados para a função Netlify
-                const response = await fetch('/.netlify/functions/send-email', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        name: name,
-                        email: email,
+                reader.onload = async function() {
+                    const base64File = reader.result.split(',')[1];
+                    
+                    const templateParams = {
+                        to_email: 'marcioduran@gmail.com',
+                        from_name: name,
+                        from_email: email,
+                        phone: phone,
                         area: area,
-                        fileName: file.name,
-                        fileContent: fileContent,
-                        fileType: file.type
-                    })
-                });
-
-                if (response.ok) {
-                    document.getElementById('successModal').classList.add('active');
-                    document.getElementById('contactForm').reset();
-                    document.getElementById('fileName').textContent = 'Nenhum arquivo selecionado';
-                } else {
-                    const errorData = await response.json();
-                    showErrorModal(errorData.message || 'Erro ao enviar o formulário. Tente novamente.');
-                }
+                        message: `Nova candidatura recebida!\n\nNome: ${name}\nEmail: ${email}\nTelefone: ${phone}\nÁrea: ${area}`,
+                        attachment: base64File,
+                        filename: file.name
+                    };
+                    
+                    try {
+                        const response = await emailjs.send(
+                            'service_a7vidrv',
+                            'template_zdjnnsq',
+                            templateParams
+                        );
+                        
+                        console.log('SUCCESS!', response.status, response.text);
+                        document.getElementById('successModal').classList.add('active');
+                        document.getElementById('contactForm').reset();
+                        document.getElementById('fileName').textContent = 'Nenhum arquivo selecionado';
+                        
+                    } catch (error) {
+                        console.error('FAILED...', error);
+                        document.getElementById('errorMessage').textContent = 
+                            'Erro ao enviar: ' + (error.text || error.message || 'Tente novamente mais tarde.');
+                        document.getElementById('errorModal').classList.add('active');
+                    } finally {
+                        submitBtn.disabled = false;
+                        submitBtn.classList.remove('loading');
+                    }
+                };
+                
+                reader.onerror = function() {
+                    console.error('Erro ao ler o arquivo');
+                    document.getElementById('errorMessage').textContent = 'Erro ao ler o arquivo. Tente novamente.';
+                    document.getElementById('errorModal').classList.add('active');
+                    submitBtn.disabled = false;
+                    submitBtn.classList.remove('loading');
+                };
+                
             } catch (error) {
                 console.error('Erro:', error);
-                showErrorModal('Erro ao processar o arquivo. Tente novamente.');
-            } finally {
-                // Reabilita o botão
+                document.getElementById('errorMessage').textContent = 'Erro inesperado. Tente novamente.';
+                document.getElementById('errorModal').classList.add('active');
                 submitBtn.disabled = false;
                 submitBtn.classList.remove('loading');
             }
         });
 
-        // Função para converter arquivo para Base64
-        function fileToBase64(file) {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.onload = () => resolve(reader.result.split(',')[1]);
-                reader.onerror = reject;
-                reader.readAsDataURL(file);
-            });
-        }
-
-        // Função para mostrar modal de erro
-        function showErrorModal(message) {
-            document.getElementById('errorMessage').textContent = message;
-            document.getElementById('errorModal').classList.add('active');
-        }
-
-        // Fecha o modal de sucesso
-        document.getElementById('closeModal').addEventListener('click', function() {
+        document.getElementById('closeSuccessModal').addEventListener('click', function() {
             document.getElementById('successModal').classList.remove('active');
         });
 
-        // Fecha o modal de erro
         document.getElementById('closeErrorModal').addEventListener('click', function() {
             document.getElementById('errorModal').classList.remove('active');
         });
 
-        // Fecha o modal ao clicar fora dele
         document.getElementById('successModal').addEventListener('click', function(e) {
             if (e.target === this) {
                 this.classList.remove('active');
@@ -700,4 +749,3 @@
     </script>
 </body>
 </html>
-
