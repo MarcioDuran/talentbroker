@@ -501,11 +501,11 @@
                 </div>
                 
                 <div class="form-group">
-                    <label for="attachment">Anexar Currículo (PDF ou DOCX - máx 10MB)</label>
+                    <label for="attachment">Anexar Currículo (PDF - máx 5MB)</label>
                     <div class="file-upload-wrapper">
                         <label class="file-upload">
                             <i class="fas fa-file-upload"></i> Escolher arquivo
-                            <input type="file" id="attachment" name="attachment" accept=".pdf,.doc,.docx" required>
+                            <input type="file" id="attachment" name="attachment" accept="application/pdf" required>
                         </label>
                         <small id="fileName" style="display: block; margin-top: 0.5rem; color: rgba(255,255,255,0.8);">Nenhum arquivo selecionado</small>
                     </div>
@@ -540,12 +540,21 @@
             const file = e.target.files[0];
             if (file) {
                 const fileSize = file.size / 1024 / 1024;
-                if (fileSize > 10) {
-                    alert('O arquivo é muito grande. Por favor, selecione um arquivo menor que 10MB.');
+                if (fileSize > 5) {
+                    alert('O arquivo é muito grande. Por favor, selecione um arquivo menor que 5MB.');
                     this.value = '';
                     document.getElementById('fileName').textContent = 'Nenhum arquivo selecionado';
                     return;
                 }
+                
+                // Verifica se é PDF
+                if (file.type !== 'application/pdf') {
+                    alert('Por favor, envie apenas arquivos PDF.');
+                    this.value = '';
+                    document.getElementById('fileName').textContent = 'Nenhum arquivo selecionado';
+                    return;
+                }
+                
                 document.getElementById('fileName').textContent = file.name + ' (' + fileSize.toFixed(2) + ' MB)';
             } else {
                 document.getElementById('fileName').textContent = 'Nenhum arquivo selecionado';
@@ -558,14 +567,19 @@
             
             if (!file) {
                 e.preventDefault();
-                alert('Por favor, anexe seu currículo.');
+                alert('Por favor, anexe seu currículo em PDF.');
                 return false;
             }
             
-            const allowedTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
-            if (!allowedTypes.includes(file.type)) {
+            if (file.type !== 'application/pdf') {
                 e.preventDefault();
-                alert('Por favor, envie apenas arquivos PDF ou DOCX.');
+                alert('Por favor, envie apenas arquivos PDF.');
+                return false;
+            }
+            
+            if (file.size > 5 * 1024 * 1024) {
+                e.preventDefault();
+                alert('O arquivo é muito grande. Limite de 5MB.');
                 return false;
             }
             
