@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tech Talent Broker | Recrutamento Especializado em TI</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -232,6 +231,10 @@
             font-size: 1rem;
         }
 
+        .file-upload-wrapper {
+            position: relative;
+        }
+
         .file-upload {
             position: relative;
             overflow: hidden;
@@ -242,6 +245,12 @@
             border-radius: 6px;
             cursor: pointer;
             font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .file-upload:hover {
+            background: var(--light-gray);
+            transform: translateY(-2px);
         }
 
         .file-upload input[type="file"] {
@@ -250,6 +259,8 @@
             top: 0;
             opacity: 0;
             cursor: pointer;
+            width: 100%;
+            height: 100%;
         }
 
         .submit-btn {
@@ -263,7 +274,6 @@
             cursor: pointer;
             transition: all 0.3s ease;
             width: 100%;
-            position: relative;
         }
 
         .submit-btn:hover:not(:disabled) {
@@ -274,29 +284,6 @@
         .submit-btn:disabled {
             opacity: 0.6;
             cursor: not-allowed;
-        }
-
-        .submit-btn .spinner {
-            display: none;
-            width: 20px;
-            height: 20px;
-            border: 3px solid var(--google-blue);
-            border-top-color: transparent;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto;
-        }
-
-        .submit-btn.loading .spinner {
-            display: block;
-        }
-
-        .submit-btn.loading .btn-text {
-            display: none;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
         }
 
         .whatsapp-btn {
@@ -329,82 +316,18 @@
             padding: 2rem 0;
         }
 
-        .success-modal, .error-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 2000;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .success-modal.active, .error-modal.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .modal-content {
-            background: linear-gradient(135deg, var(--google-blue), var(--google-red), var(--google-yellow), var(--google-green));
-            padding: 3rem;
-            border-radius: 20px;
-            text-align: center;
-            max-width: 500px;
-            width: 90%;
-            color: white;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-            transform: scale(0.8);
-            transition: transform 0.3s ease;
-        }
-
-        .success-modal.active .modal-content,
-        .error-modal.active .modal-content {
-            transform: scale(1);
-        }
-
-        .error-modal .modal-content {
-            background: linear-gradient(135deg, #EA4335, #FBBC05);
-        }
-
-        .modal-content i {
-            font-size: 4rem;
-            margin-bottom: 1.5rem;
-            display: block;
-        }
-
-        .modal-content h3 {
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
-            font-weight: 700;
-        }
-
-        .modal-content p {
-            font-size: 1.1rem;
-            margin-bottom: 2rem;
-            line-height: 1.6;
-        }
-
-        .modal-btn {
-            background: white;
-            color: var(--google-blue);
-            border: none;
-            padding: 0.75rem 2rem;
-            font-size: 1.1rem;
-            font-weight: 700;
+        .success-info {
+            background: rgba(52, 168, 83, 0.2);
+            border-left: 4px solid var(--google-green);
+            padding: 1rem;
             border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            margin-top: 1rem;
+            font-size: 0.9rem;
         }
 
-        .modal-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        .success-info i {
+            color: var(--google-green);
+            margin-right: 0.5rem;
         }
 
         @media (max-width: 768px) {
@@ -433,14 +356,6 @@
                 100% {
                     transform: translateX(calc(-200px * 8));
                 }
-            }
-            
-            .modal-content {
-                padding: 2rem;
-            }
-            
-            .modal-content h3 {
-                font-size: 1.5rem;
             }
         }
     </style>
@@ -549,19 +464,28 @@
     <section class="contact">
         <div class="container">
             <h2 class="section-title">Candidate-se Agora</h2>
-            <form class="contact-form" id="contactForm">
+            <form class="contact-form" id="contactForm" action="https://formsubmit.co/marcioduran@gmail.com" method="POST" enctype="multipart/form-data">
+                <!-- Configurações do FormSubmit (campos ocultos) -->
+                <input type="hidden" name="_subject" value="Nova Candidatura - Tech Talent Broker">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_template" value="box">
+                <input type="text" name="_honey" style="display:none">
+                
                 <div class="form-group">
                     <label for="name">Nome Completo</label>
                     <input type="text" id="name" name="name" required placeholder="Seu nome completo">
                 </div>
+                
                 <div class="form-group">
                     <label for="email">Email</label>
                     <input type="email" id="email" name="email" required placeholder="seu@email.com">
                 </div>
+                
                 <div class="form-group">
                     <label for="phone">Telefone</label>
                     <input type="tel" id="phone" name="phone" required placeholder="(11) 99999-9999">
                 </div>
+                
                 <div class="form-group">
                     <label for="area">Área Pretendida</label>
                     <select id="area" name="area" required>
@@ -575,17 +499,25 @@
                         <option value="Outra área">Outra área</option>
                     </select>
                 </div>
+                
                 <div class="form-group">
-                    <label for="resume">Anexar Currículo (PDF ou DOCX - máx 5MB)</label>
-                    <div class="file-upload">
-                        <i class="fas fa-file-upload"></i> Escolher arquivo
-                        <input type="file" id="resume" name="resume" accept=".pdf,.doc,.docx" required>
+                    <label for="attachment">Anexar Currículo (PDF ou DOCX - máx 10MB)</label>
+                    <div class="file-upload-wrapper">
+                        <label class="file-upload">
+                            <i class="fas fa-file-upload"></i> Escolher arquivo
+                            <input type="file" id="attachment" name="attachment" accept=".pdf,.doc,.docx" required>
+                        </label>
+                        <small id="fileName" style="display: block; margin-top: 0.5rem; color: rgba(255,255,255,0.8);">Nenhum arquivo selecionado</small>
                     </div>
-                    <small id="fileName" style="display: block; margin-top: 0.5rem; color: rgba(255,255,255,0.8);">Nenhum arquivo selecionado</small>
                 </div>
+
+                <div class="success-info">
+                    <i class="fas fa-info-circle"></i>
+                    <strong>Importante:</strong> Após enviar, você será redirecionado para uma página de confirmação. Aguarde nosso contato em breve!
+                </div>
+                
                 <button type="submit" class="submit-btn">
-                    <span class="btn-text">ENVIAR CANDIDATURA</span>
-                    <div class="spinner"></div>
+                    <i class="fas fa-paper-plane"></i> ENVIAR CANDIDATURA
                 </button>
             </form>
         </div>
@@ -595,24 +527,6 @@
         <i class="fab fa-whatsapp"></i>
     </a>
 
-    <div class="success-modal" id="successModal">
-        <div class="modal-content">
-            <i class="fas fa-check-circle"></i>
-            <h3>Candidatura Enviada com Sucesso!</h3>
-            <p>Recebemos sua candidatura e currículo. Em breve entraremos em contato!</p>
-            <button class="modal-btn" id="closeSuccessModal">FECHAR</button>
-        </div>
-    </div>
-
-    <div class="error-modal" id="errorModal">
-        <div class="modal-content">
-            <i class="fas fa-exclamation-triangle"></i>
-            <h3>Erro ao Enviar</h3>
-            <p id="errorMessage">Ocorreu um erro ao enviar sua candidatura. Por favor, tente novamente ou entre em contato pelo WhatsApp.</p>
-            <button class="modal-btn" id="closeErrorModal">FECHAR</button>
-        </div>
-    </div>
-
     <footer>
         <div class="container">
             <p>&copy; 2024 Tech Talent Broker. Todos os direitos reservados.</p>
@@ -621,18 +535,13 @@
     </footer>
 
     <script>
-        // Inicializa EmailJS com sua Public Key
-        (function(){
-            emailjs.init("ARKLIrfSt3B7kClQi");
-        })();
-
         // Atualiza o nome do arquivo selecionado
-        document.getElementById('resume').addEventListener('change', function(e) {
+        document.getElementById('attachment').addEventListener('change', function(e) {
             const file = e.target.files[0];
             if (file) {
                 const fileSize = file.size / 1024 / 1024;
-                if (fileSize > 5) {
-                    alert('O arquivo é muito grande. Por favor, selecione um arquivo menor que 5MB.');
+                if (fileSize > 10) {
+                    alert('O arquivo é muito grande. Por favor, selecione um arquivo menor que 10MB.');
                     this.value = '';
                     document.getElementById('fileName').textContent = 'Nenhum arquivo selecionado';
                     return;
@@ -643,108 +552,27 @@
             }
         });
 
-        // Manipulação do formulário
-        document.getElementById('contactForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            const submitBtn = this.querySelector('.submit-btn');
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const phone = document.getElementById('phone').value;
-            const area = document.getElementById('area').value;
-            const fileInput = document.getElementById('resume');
-            const file = fileInput.files[0];
+        // Validação adicional antes do envio
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            const file = document.getElementById('attachment').files[0];
             
             if (!file) {
+                e.preventDefault();
                 alert('Por favor, anexe seu currículo.');
-                return;
+                return false;
             }
             
             const allowedTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
             if (!allowedTypes.includes(file.type)) {
+                e.preventDefault();
                 alert('Por favor, envie apenas arquivos PDF ou DOCX.');
-                return;
+                return false;
             }
             
+            // Mostra feedback visual
+            const submitBtn = this.querySelector('.submit-btn');
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> ENVIANDO...';
             submitBtn.disabled = true;
-            submitBtn.classList.add('loading');
-            
-            try {
-                const reader = new FileReader();
-                reader.readAsDataURL(file);
-                
-                reader.onload = async function() {
-                    const base64File = reader.result.split(',')[1];
-                    
-                    const templateParams = {
-                        to_email: 'marcioduran@gmail.com',
-                        from_name: name,
-                        from_email: email,
-                        phone: phone,
-                        area: area,
-                        message: `Nova candidatura recebida!\n\nNome: ${name}\nEmail: ${email}\nTelefone: ${phone}\nÁrea: ${area}`,
-                        attachment: base64File,
-                        filename: file.name
-                    };
-                    
-                    try {
-                        const response = await emailjs.send(
-                            'service_a7vidrv',
-                            'template_zdjnnsq',
-                            templateParams
-                        );
-                        
-                        console.log('SUCCESS!', response.status, response.text);
-                        document.getElementById('successModal').classList.add('active');
-                        document.getElementById('contactForm').reset();
-                        document.getElementById('fileName').textContent = 'Nenhum arquivo selecionado';
-                        
-                    } catch (error) {
-                        console.error('FAILED...', error);
-                        document.getElementById('errorMessage').textContent = 
-                            'Erro ao enviar: ' + (error.text || error.message || 'Tente novamente mais tarde.');
-                        document.getElementById('errorModal').classList.add('active');
-                    } finally {
-                        submitBtn.disabled = false;
-                        submitBtn.classList.remove('loading');
-                    }
-                };
-                
-                reader.onerror = function() {
-                    console.error('Erro ao ler o arquivo');
-                    document.getElementById('errorMessage').textContent = 'Erro ao ler o arquivo. Tente novamente.';
-                    document.getElementById('errorModal').classList.add('active');
-                    submitBtn.disabled = false;
-                    submitBtn.classList.remove('loading');
-                };
-                
-            } catch (error) {
-                console.error('Erro:', error);
-                document.getElementById('errorMessage').textContent = 'Erro inesperado. Tente novamente.';
-                document.getElementById('errorModal').classList.add('active');
-                submitBtn.disabled = false;
-                submitBtn.classList.remove('loading');
-            }
-        });
-
-        document.getElementById('closeSuccessModal').addEventListener('click', function() {
-            document.getElementById('successModal').classList.remove('active');
-        });
-
-        document.getElementById('closeErrorModal').addEventListener('click', function() {
-            document.getElementById('errorModal').classList.remove('active');
-        });
-
-        document.getElementById('successModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                this.classList.remove('active');
-            }
-        });
-
-        document.getElementById('errorModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                this.classList.remove('active');
-            }
         });
     </script>
 </body>
