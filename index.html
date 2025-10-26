@@ -61,6 +61,53 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
+        .language-selector {
+            position: relative;
+            display: inline-block;
+        }
+        .language-btn {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            backdrop-filter: blur(5px);
+        }
+        .language-btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+        .language-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            margin-top: 0.5rem;
+            display: none;
+            z-index: 1001;
+        }
+        .language-dropdown.active {
+            display: block;
+        }
+        .language-option {
+            padding: 0.75rem 1rem;
+            cursor: pointer;
+            color: var(--dark-gray);
+            font-weight: 500;
+            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .language-option:hover {
+            background: var(--light-gray);
+        }
         .hero {
             padding: 4rem 0;
             text-align: center;
@@ -373,6 +420,12 @@
             .modal-content p {
                 font-size: 1rem;
             }
+            .language-selector {
+                position: absolute;
+                right: 1rem;
+                top: 50%;
+                transform: translateY(-50%);
+            }
         }
     </style>
 </head>
@@ -383,28 +436,41 @@
                 <div class="logo">
                     <h1>TECH <span>TALENT</span> BROKER</h1>
                 </div>
+                <div class="language-selector">
+                    <button class="language-btn" id="languageBtn">
+                        <i class="fas fa-globe"></i>
+                        <span id="currentLang">PT</span>
+                    </button>
+                    <div class="language-dropdown" id="languageDropdown">
+                        <div class="language-option" data-lang="pt">
+                            <span>🇧🇷 Português</span>
+                        </div>
+                        <div class="language-option" data-lang="en">
+                            <span>🇺🇸 English</span>
+                        </div>
+                        <div class="language-option" data-lang="fr">
+                            <span>🇫🇷 Français</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </header>
     <section class="hero">
         <div class="container">
-            <h2>Recrutamento Especializado em TI</h2>
-            <p>Conectamos os melhores talentos brasileiros e lusófonos com as empresas mais inovadoras do mundo. Trabalhe remotamente ou em modelo híbrido com as gigantes da tecnologia.</p>
+            <h2 id="hero-title">Recrutamento Especializado em TI</h2>
+            <p id="hero-desc">Conectamos os melhores talentos brasileiros e lusófonos com as empresas mais inovadoras do mundo. Trabalhe remotamente ou em modelo híbrido com as gigantes da tecnologia.</p>
         </div>
     </section>
-
-    <!-- Seção Atualizada: Tecnologias -->
     <section class="technologies">
         <div class="container">
-            <h2 class="section-title">Tecnologias que Nossos Talentos Dominam</h2>
+            <h2 class="section-title" id="tech-title">Tecnologias que Nossos Talentos Dominam</h2>
             <div class="carousel-container">
                 <div class="carousel-track">
-                    <!-- Primeira sequência -->
                     <div class="carousel-item">
                         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Tux.svg/120px-Tux.svg.png" alt="Linux">
                     </div>
                     <div class="carousel-item">
-                        <!-- Java Duke acenando -->
                         <img src="https://www.oracle.com/a/ocom/img/cb71-java-logo.png" alt="Java">
                     </div>
                     <div class="carousel-item">
@@ -414,11 +480,9 @@
                         <img src="https://cdn.worldvectorlogo.com/logos/postgresql.svg" alt="PostgreSQL">
                     </div>
                     <div class="carousel-item">
-                        <!-- AWS logo oficial -->
                         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Amazon_Web_Services_Logo.svg/320px-Amazon_Web_Services_Logo.svg.png" alt="AWS">
                     </div>
                     <div class="carousel-item">
-                        <!-- Wazuh logo oficial -->
                         <img src="https://wazuh.com/uploads/2022/05/Logo-blogpost.png" alt="Wazuh">
                     </div>
                     <div class="carousel-item">
@@ -428,22 +492,18 @@
                         <img src="https://cdn.worldvectorlogo.com/logos/docker.svg" alt="Docker">
                     </div>
                     <div class="carousel-item">
-                        <!-- Kubernetes logo oficial -->
                         <img src="https://kubernetes.io/images/kubernetes-horizontal-color.png" alt="Kubernetes">
                     </div>
                     <div class="carousel-item">
-                        <!-- Terraform logo oficial -->
                         <img src="https://www.datocms-assets.com/2885/1620155116-brandhcterraformverticalcolor.svg" alt="Terraform">
                     </div>
                     <div class="carousel-item">
                         <img src="https://cdn.worldvectorlogo.com/logos/redis.svg" alt="Redis">
                     </div>
-                    <!-- Segunda sequência (duplicada para loop suave) -->
                     <div class="carousel-item">
                         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Tux.svg/120px-Tux.svg.png" alt="Linux">
                     </div>
                     <div class="carousel-item">
-                        <!-- Java Duke acenando -->
                         <img src="https://www.oracle.com/a/ocom/img/cb71-java-logo.png" alt="Java">
                     </div>
                     <div class="carousel-item">
@@ -453,11 +513,9 @@
                         <img src="https://cdn.worldvectorlogo.com/logos/postgresql.svg" alt="PostgreSQL">
                     </div>
                     <div class="carousel-item">
-                        <!-- AWS logo oficial -->
                         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Amazon_Web_Services_Logo.svg/320px-Amazon_Web_Services_Logo.svg.png" alt="AWS">
                     </div>
                     <div class="carousel-item">
-                        <!-- Wazuh logo oficial -->
                         <img src="https://wazuh.com/uploads/2022/05/Logo-blogpost.png" alt="Wazuh">
                     </div>
                     <div class="carousel-item">
@@ -467,11 +525,9 @@
                         <img src="https://cdn.worldvectorlogo.com/logos/docker.svg" alt="Docker">
                     </div>
                     <div class="carousel-item">
-                        <!-- Kubernetes logo oficial -->
                         <img src="https://kubernetes.io/images/kubernetes-horizontal-color.png" alt="Kubernetes">
                     </div>
                     <div class="carousel-item">
-                        <!-- Terraform logo oficial -->
                         <img src="https://www.datocms-assets.com/2885/1620155116-brandhcterraformverticalcolor.svg" alt="Terraform">
                     </div>
                     <div class="carousel-item">
@@ -481,32 +537,31 @@
             </div>
         </div>
     </section>
-
     <section class="services">
         <div class="container">
-            <h2 class="section-title">Nossos Serviços</h2>
+            <h2 class="section-title" id="services-title">Nossos Serviços</h2>
             <div class="service-cards">
                 <div class="card">
                     <i class="fas fa-laptop-code"></i>
-                    <h3>Recrutamento Especializado</h3>
-                    <p>Buscamos os melhores talentos para posições técnicas específicas nas áreas de TI, garantindo o match perfeito entre profissional e empresa.</p>
+                    <h3 id="service1-title">Recrutamento Especializado</h3>
+                    <p id="service1-desc">Buscamos os melhores talentos para posições técnicas específicas nas áreas de TI, garantindo o match perfeito entre profissional e empresa.</p>
                 </div>
                 <div class="card">
                     <i class="fas fa-globe-americas"></i>
-                    <h3>Trabalho Remoto Global</h3>
-                    <p>Oportunidades internacionais para profissionais brasileiros e lusófonos, com suporte completo para alocação remota e híbrida.</p>
+                    <h3 id="service2-title">Trabalho Remoto Global</h3>
+                    <p id="service2-desc">Oportunidades internacionais para profissionais brasileiros e lusófonos, com suporte completo para alocação remota e híbrida.</p>
                 </div>
                 <div class="card">
                     <i class="fas fa-handshake"></i>
-                    <h3>Parceria com Gigantes</h3>
-                    <p>Conexão direta com empresas líderes mundiais em tecnologia, proporcionando carreiras de alto impacto e remuneração competitiva.</p>
+                    <h3 id="service3-title">Parceria com Gigantes</h3>
+                    <p id="service3-desc">Conexão direta com empresas líderes mundiais em tecnologia, proporcionando carreiras de alto impacto e remuneração competitiva.</p>
                 </div>
             </div>
         </div>
     </section>
     <section class="contact">
         <div class="container">
-            <h2 class="section-title">Candidate-se Agora</h2>
+            <h2 class="section-title" id="contact-title">Candidate-se Agora</h2>
             <form class="contact-form" id="contactForm">
                 <input type="hidden" name="_subject" value="Nova Candidatura - Tech Talent Broker">
                 <input type="hidden" name="_captcha" value="false">
@@ -514,42 +569,42 @@
                 <input type="text" name="_honey" style="display:none">
                 <input type="hidden" name="_next" value="">
                 <div class="form-group">
-                    <label for="name">Nome Completo</label>
+                    <label for="name" id="label-name">Nome Completo</label>
                     <input type="text" id="name" name="name" required placeholder="Seu nome completo">
                 </div>
                 <div class="form-group">
-                    <label for="email">Email</label>
+                    <label for="email" id="label-email">Email</label>
                     <input type="email" id="email" name="email" required placeholder="seu@email.com">
                 </div>
                 <div class="form-group">
-                    <label for="phone">Telefone</label>
+                    <label for="phone" id="label-phone">Telefone</label>
                     <input type="tel" id="phone" name="phone" required placeholder="(11) 99999-9999">
                 </div>
                 <div class="form-group">
-                    <label for="area">Área Pretendida</label>
+                    <label for="area" id="label-area">Área Pretendida</label>
                     <select id="area" name="area" required>
-                        <option value="">Selecione uma área</option>
-                        <option value="Desenvolvimento de Software">Desenvolvimento de Software</option>
-                        <option value="DevOps & SRE">DevOps & SRE</option>
-                        <option value="Segurança da Informação">Segurança da Informação</option>
-                        <option value="Ciência de Dados & Analytics">Ciência de Dados & Analytics</option>
-                        <option value="Cloud Computing">Cloud Computing</option>
-                        <option value="Infraestrutura & Redes">Infraestrutura & Redes</option>
-                        <option value="Outra área">Outra área</option>
+                        <option value="" id="select-placeholder">Selecione uma área</option>
+                        <option value="Desenvolvimento de Software" id="opt-dev">Desenvolvimento de Software</option>
+                        <option value="DevOps & SRE" id="opt-devops">DevOps & SRE</option>
+                        <option value="Segurança da Informação" id="opt-security">Segurança da Informação</option>
+                        <option value="Ciência de Dados & Analytics" id="opt-data">Ciência de Dados & Analytics</option>
+                        <option value="Cloud Computing" id="opt-cloud">Cloud Computing</option>
+                        <option value="Infraestrutura & Redes" id="opt-infra">Infraestrutura & Redes</option>
+                        <option value="Outra área" id="opt-other">Outra área</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="attachment">Anexar Currículo (PDF - máx 5MB)</label>
+                    <label for="attachment" id="label-attachment">Anexar Currículo (PDF - máx 5MB)</label>
                     <div class="file-upload-wrapper">
                         <label class="file-upload">
-                            <i class="fas fa-file-upload"></i> Escolher arquivo
+                            <i class="fas fa-file-upload"></i> <span id="upload-text">Escolher arquivo</span>
                             <input type="file" id="attachment" name="attachment" accept="application/pdf" required>
                         </label>
                         <small id="fileName" style="display: block; margin-top: 0.5rem; color: rgba(255,255,255,0.8);">Nenhum arquivo selecionado</small>
                     </div>
                 </div>
                 <button type="submit" class="submit-btn">
-                    <i class="fas fa-paper-plane"></i> ENVIAR CANDIDATURA
+                    <i class="fas fa-paper-plane"></i> <span id="submit-text">ENVIAR CANDIDATURA</span>
                 </button>
             </form>
         </div>
@@ -560,18 +615,182 @@
     <div class="success-modal" id="successModal">
         <div class="modal-content">
             <i class="fas fa-check-circle"></i>
-            <h3>Recebemos suas informações!</h3>
-            <p>Entraremos em contato em breve.<br><strong>— Tech Talent Broker Consultoria em Talentos</strong></p>
-            <button class="modal-btn" id="closeModal">FECHAR</button>
+            <h3 id="modal-title">Recebemos suas informações!</h3>
+            <p id="modal-desc">Entraremos em contato em breve.<br><strong>— Tech Talent Broker Consultoria em Talentos</strong></p>
+            <button class="modal-btn" id="closeModal"><span id="modal-btn-text">FECHAR</span></button>
         </div>
     </div>
     <footer>
         <div class="container">
-            <p>&copy; 2025 Tech Talent Broker. Todos os direitos reservados.</p>
-            <p>Recrutamento especializado para profissionais de TI brasileiros e lusófonos.</p>
+            <p id="footer-copyright">&copy; 2025 Tech Talent Broker. Todos os direitos reservados.</p>
+            <p id="footer-desc">Recrutamento especializado para profissionais de TI brasileiros e lusófonos.</p>
         </div>
     </footer>
     <script>
+        const translations = {
+            pt: {
+                currentLang: "PT",
+                heroTitle: "Recrutamento Especializado em TI",
+                heroDesc: "Conectamos os melhores talentos brasileiros e lusófonos com as empresas mais inovadoras do mundo. Trabalhe remotamente ou em modelo híbrido com as gigantes da tecnologia.",
+                techTitle: "Tecnologias que Nossos Talentos Dominam",
+                servicesTitle: "Nossos Serviços",
+                service1Title: "Recrutamento Especializado",
+                service1Desc: "Buscamos os melhores talentos para posições técnicas específicas nas áreas de TI, garantindo o match perfeito entre profissional e empresa.",
+                service2Title: "Trabalho Remoto Global",
+                service2Desc: "Oportunidades internacionais para profissionais brasileiros e lusófonos, com suporte completo para alocação remota e híbrida.",
+                service3Title: "Parceria com Gigantes",
+                service3Desc: "Conexão direta com empresas líderes mundiais em tecnologia, proporcionando carreiras de alto impacto e remuneração competitiva.",
+                contactTitle: "Candidate-se Agora",
+                labelName: "Nome Completo",
+                labelEmail: "Email",
+                labelPhone: "Telefone",
+                labelArea: "Área Pretendida",
+                selectPlaceholder: "Selecione uma área",
+                optDev: "Desenvolvimento de Software",
+                optDevops: "DevOps & SRE",
+                optSecurity: "Segurança da Informação",
+                optData: "Ciência de Dados & Analytics",
+                optCloud: "Cloud Computing",
+                optInfra: "Infraestrutura & Redes",
+                optOther: "Outra área",
+                labelAttachment: "Anexar Currículo (PDF - máx 5MB)",
+                uploadText: "Escolher arquivo",
+                submitText: "ENVIAR CANDIDATURA",
+                modalTitle: "Recebemos suas informações!",
+                modalDesc: "Entraremos em contato em breve.<br><strong>— Tech Talent Broker Consultoria em Talentos</strong>",
+                modalBtnText: "FECHAR",
+                footerCopyright: "&copy; 2025 Tech Talent Broker. Todos os direitos reservados.",
+                footerDesc: "Recrutamento especializado para profissionais de TI brasileiros e lusófonos."
+            },
+            en: {
+                currentLang: "EN",
+                heroTitle: "Specialized IT Recruitment",
+                heroDesc: "We connect the best Brazilian and Lusophone talents with the world's most innovative companies. Work remotely or in a hybrid model with tech giants.",
+                techTitle: "Technologies Our Talents Master",
+                servicesTitle: "Our Services",
+                service1Title: "Specialized Recruitment",
+                service1Desc: "We find the best talents for specific technical positions in IT, ensuring the perfect match between professional and company.",
+                service2Title: "Global Remote Work",
+                service2Desc: "International opportunities for Brazilian and Lusophone professionals, with full support for remote and hybrid placement.",
+                service3Title: "Partnership with Giants",
+                service3Desc: "Direct connection with world-leading technology companies, providing high-impact careers and competitive compensation.",
+                contactTitle: "Apply Now",
+                labelName: "Full Name",
+                labelEmail: "Email",
+                labelPhone: "Phone",
+                labelArea: "Target Area",
+                selectPlaceholder: "Select an area",
+                optDev: "Software Development",
+                optDevops: "DevOps & SRE",
+                optSecurity: "Information Security",
+                optData: "Data Science & Analytics",
+                optCloud: "Cloud Computing",
+                optInfra: "Infrastructure & Networks",
+                optOther: "Other area",
+                labelAttachment: "Attach Resume (PDF - max 5MB)",
+                uploadText: "Choose file",
+                submitText: "SUBMIT APPLICATION",
+                modalTitle: "We've received your information!",
+                modalDesc: "We'll contact you soon.<br><strong>— Tech Talent Broker Talent Consulting</strong>",
+                modalBtnText: "CLOSE",
+                footerCopyright: "&copy; 2025 Tech Talent Broker. All rights reserved.",
+                footerDesc: "Specialized recruitment for Brazilian and Lusophone IT professionals."
+            },
+            fr: {
+                currentLang: "FR",
+                heroTitle: "Recrutement Spécialisé en IT",
+                heroDesc: "Nous connectons les meilleurs talents brésiliens et lusophones avec les entreprises les plus innovantes du monde. Travaillez à distance ou en mode hybride avec les géants de la technologie.",
+                techTitle: "Technologies Maîtrisées par Nos Talents",
+                servicesTitle: "Nos Services",
+                service1Title: "Recrutement Spécialisé",
+                service1Desc: "Nous trouvons les meilleurs talents pour des postes techniques spécifiques en informatique, garantissant le parfait match entre professionnel et entreprise.",
+                service2Title: "Travail à Distance International",
+                service2Desc: "Opportunités internationales pour les professionnels brésiliens et lusophones, avec un support complet pour le placement à distance et hybride.",
+                service3Title: "Partenariat avec les Géants",
+                service3Desc: "Connexion directe avec les entreprises mondiales leaders en technologie, offrant des carrières à fort impact et une rémunération compétitive.",
+                contactTitle: "Postulez Maintenant",
+                labelName: "Nom Complet",
+                labelEmail: "Email",
+                labelPhone: "Téléphone",
+                labelArea: "Domaine Visé",
+                selectPlaceholder: "Sélectionnez un domaine",
+                optDev: "Développement Logiciel",
+                optDevops: "DevOps & SRE",
+                optSecurity: "Sécurité Informatique",
+                optData: "Science des Données & Analytique",
+                optCloud: "Cloud Computing",
+                optInfra: "Infrastructure & Réseaux",
+                optOther: "Autre domaine",
+                labelAttachment: "Joindre CV (PDF - max 5 Mo)",
+                uploadText: "Choisir un fichier",
+                submitText: "ENVOYER LA CANDIDATURE",
+                modalTitle: "Nous avons reçu vos informations !",
+                modalDesc: "Nous vous contacterons bientôt.<br><strong>— Tech Talent Broker Conseil en Talents</strong>",
+                modalBtnText: "FERMER",
+                footerCopyright: "&copy; 2025 Tech Talent Broker. Tous droits réservés.",
+                footerDesc: "Recrutement spécialisé pour les professionnels IT brésiliens et lusophones."
+            }
+        };
+
+        let currentLang = 'pt';
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            const t = translations[lang];
+            
+            document.getElementById('currentLang').textContent = t.currentLang;
+            document.getElementById('hero-title').textContent = t.heroTitle;
+            document.getElementById('hero-desc').textContent = t.heroDesc;
+            document.getElementById('tech-title').textContent = t.techTitle;
+            document.getElementById('services-title').textContent = t.servicesTitle;
+            document.getElementById('service1-title').textContent = t.service1Title;
+            document.getElementById('service1-desc').textContent = t.service1Desc;
+            document.getElementById('service2-title').textContent = t.service2Title;
+            document.getElementById('service2-desc').textContent = t.service2Desc;
+            document.getElementById('service3-title').textContent = t.service3Title;
+            document.getElementById('service3-desc').textContent = t.service3Desc;
+            document.getElementById('contact-title').textContent = t.contactTitle;
+            document.getElementById('label-name').textContent = t.labelName;
+            document.getElementById('label-email').textContent = t.labelEmail;
+            document.getElementById('label-phone').textContent = t.labelPhone;
+            document.getElementById('label-area').textContent = t.labelArea;
+            document.getElementById('select-placeholder').textContent = t.selectPlaceholder;
+            document.getElementById('opt-dev').textContent = t.optDev;
+            document.getElementById('opt-devops').textContent = t.optDevops;
+            document.getElementById('opt-security').textContent = t.optSecurity;
+            document.getElementById('opt-data').textContent = t.optData;
+            document.getElementById('opt-cloud').textContent = t.optCloud;
+            document.getElementById('opt-infra').textContent = t.optInfra;
+            document.getElementById('opt-other').textContent = t.optOther;
+            document.getElementById('label-attachment').textContent = t.labelAttachment;
+            document.getElementById('upload-text').textContent = t.uploadText;
+            document.getElementById('submit-text').textContent = t.submitText;
+            document.getElementById('modal-title').textContent = t.modalTitle;
+            document.getElementById('modal-desc').innerHTML = t.modalDesc;
+            document.getElementById('modal-btn-text').textContent = t.modalBtnText;
+            document.getElementById('footer-copyright').innerHTML = t.footerCopyright;
+            document.getElementById('footer-desc').textContent = t.footerDesc;
+
+            document.getElementById('languageDropdown').classList.remove('active');
+        }
+
+        document.getElementById('languageBtn').addEventListener('click', function() {
+            document.getElementById('languageDropdown').classList.toggle('active');
+        });
+
+        document.querySelectorAll('.language-option').forEach(option => {
+            option.addEventListener('click', function() {
+                const lang = this.getAttribute('data-lang');
+                setLanguage(lang);
+            });
+        });
+
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.language-selector')) {
+                document.getElementById('languageDropdown').classList.remove('active');
+            }
+        });
+
         document.getElementById('attachment').addEventListener('change', function(e) {
             const file = e.target.files[0];
             if (file) {
@@ -593,6 +812,7 @@
                 document.getElementById('fileName').textContent = 'Nenhum arquivo selecionado';
             }
         });
+
         document.getElementById('contactForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             const formData = new FormData(this);
@@ -603,7 +823,7 @@
                 alert('Por favor, anexe um currículo válido em PDF (máx. 5MB).');
                 return;
             }
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> ENVIANDO...';
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> ' + (currentLang === 'pt' ? 'ENVIANDO...' : currentLang === 'en' ? 'SENDING...' : 'ENVOI...');
             submitBtn.disabled = true;
             try {
                 const response = await fetch('https://formsubmit.co/marcioduran@gmail.com', {
@@ -613,7 +833,7 @@
                 if (response.ok) {
                     document.getElementById('successModal').classList.add('active');
                     this.reset();
-                    document.getElementById('fileName').textContent = 'Nenhum arquivo selecionado';
+                    document.getElementById('fileName').textContent = currentLang === 'pt' ? 'Nenhum arquivo selecionado' : currentLang === 'en' ? 'No file selected' : 'Aucun fichier sélectionné';
                 } else {
                     throw new Error('Falha no envio');
                 }
@@ -625,9 +845,11 @@
                 submitBtn.disabled = false;
             }
         });
+
         document.getElementById('closeModal').addEventListener('click', function() {
             document.getElementById('successModal').classList.remove('active');
         });
+
         document.getElementById('successModal').addEventListener('click', function(e) {
             if (e.target === this) {
                 this.classList.remove('active');
@@ -636,3 +858,4 @@
     </script>
 </body>
 </html>
+
