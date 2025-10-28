@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tech Talent Broker | Recrutamento Especializado em TI</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Script necessário para o dotlottie-player -->
+    <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
     <style>
         * {
             margin: 0;
@@ -113,6 +115,7 @@
             text-align: center;
             background: linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9)), 
                         url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&h=600&fit=crop') center/cover no-repeat;
+            position: relative;
         }
         .hero h2 {
             font-size: 3rem;
@@ -426,6 +429,13 @@
                 top: 50%;
                 transform: translateY(-50%);
             }
+            /* Responsividade para a animação Lottie */
+            .hero dotlottie-player {
+                width: 120px;
+                height: 120px;
+                top: 10px;
+                right: 10px;
+            }
         }
     </style>
 </head>
@@ -461,6 +471,15 @@
             <h2 id="hero-title">Recrutamento Especializado em TI</h2>
             <p id="hero-desc">Conectamos os melhores talentos brasileiros e lusófonos com as empresas mais inovadoras do mundo. Trabalhe remotamente ou em modelo híbrido com as gigantes da tecnologia.</p>
         </div>
+        <!-- Animação Lottie no canto superior direito -->
+        <dotlottie-player 
+            src="https://lottie.host/6d1cc986-c17f-43a5-8bfb-5ba33bcf1085/wDFHaO9sD2.json"
+            background="transparent" 
+            speed="1" 
+            style="width: 200px; height: 200px; position: absolute; top: 20px; right: 20px; z-index: 10;"
+            loop 
+            autoplay>
+        </dotlottie-player>
     </section>
     <section class="technologies">
         <div class="container">
@@ -731,13 +750,10 @@
                 footerDesc: "Recrutement spécialisé pour les professionnels IT brésiliens et lusophones."
             }
         };
-
         let currentLang = 'pt';
-
         function setLanguage(lang) {
             currentLang = lang;
             const t = translations[lang];
-            
             document.getElementById('currentLang').textContent = t.currentLang;
             document.getElementById('hero-title').textContent = t.heroTitle;
             document.getElementById('hero-desc').textContent = t.heroDesc;
@@ -770,27 +786,22 @@
             document.getElementById('modal-btn-text').textContent = t.modalBtnText;
             document.getElementById('footer-copyright').innerHTML = t.footerCopyright;
             document.getElementById('footer-desc').textContent = t.footerDesc;
-
             document.getElementById('languageDropdown').classList.remove('active');
         }
-
         document.getElementById('languageBtn').addEventListener('click', function() {
             document.getElementById('languageDropdown').classList.toggle('active');
         });
-
         document.querySelectorAll('.language-option').forEach(option => {
             option.addEventListener('click', function() {
                 const lang = this.getAttribute('data-lang');
                 setLanguage(lang);
             });
         });
-
         document.addEventListener('click', function(e) {
             if (!e.target.closest('.language-selector')) {
                 document.getElementById('languageDropdown').classList.remove('active');
             }
         });
-
         document.getElementById('attachment').addEventListener('change', function(e) {
             const file = e.target.files[0];
             if (file) {
@@ -812,7 +823,6 @@
                 document.getElementById('fileName').textContent = 'Nenhum arquivo selecionado';
             }
         });
-
         document.getElementById('contactForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             const formData = new FormData(this);
@@ -845,11 +855,9 @@
                 submitBtn.disabled = false;
             }
         });
-
         document.getElementById('closeModal').addEventListener('click', function() {
             document.getElementById('successModal').classList.remove('active');
         });
-
         document.getElementById('successModal').addEventListener('click', function(e) {
             if (e.target === this) {
                 this.classList.remove('active');
